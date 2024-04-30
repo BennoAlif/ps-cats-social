@@ -1,0 +1,15 @@
+package v1routes
+
+import (
+	v1controller "github.com/BennoAlif/ps-cats-social/src/http/controllers/ping"
+)
+
+func (i *V1Routes) MountPing() {
+	g := i.Echo.Group("/ping")
+
+	pingController := v1controller.New(&v1controller.V1{
+		DB: i.DB,
+	})
+
+	g.GET("", pingController.Ping)
+}
