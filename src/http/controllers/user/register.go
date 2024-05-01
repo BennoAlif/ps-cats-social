@@ -34,13 +34,13 @@ func (i *V1User) Register(c echo.Context) (err error) {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, ErrorResponse{
+		return c.JSON(http.StatusConflict, ErrorResponse{
 			Status:  false,
 			Message: err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusOK, SuccessResponse{
+	return c.JSON(http.StatusCreated, SuccessResponse{
 		Message: "User registered successfully",
 		Data:    data,
 	})
