@@ -2,7 +2,6 @@ package userusecase
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/BennoAlif/ps-cats-social/src/helpers"
 )
@@ -24,8 +23,6 @@ type (
 )
 
 func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
-	expiredInMinutesStr := os.Getenv("ACCESS_TOKEN_EXPIRED_IN_MINUTES")
-	expiredInMinutes, _ := strconv.Atoi(expiredInMinutesStr)
 
 	emailMx := helpers.ValidateMx(p.Email)
 
@@ -39,7 +36,7 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 	}
 
 	paramsGenerateJWTLogin := helpers.ParamsGenerateJWT{
-		ExpiredInMinute: expiredInMinutes,
+		ExpiredInMinute: 480,
 		UserId:          user.ID,
 		SecretKey:       os.Getenv("JWT_SECRET"),
 	}

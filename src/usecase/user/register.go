@@ -2,7 +2,6 @@ package userusecase
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/BennoAlif/ps-cats-social/src/helpers"
 
@@ -18,8 +17,6 @@ type (
 )
 
 func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
-	expiredInMinutesStr := os.Getenv("ACCESS_TOKEN_EXPIRED_IN_MINUTES")
-	expiredInMinutes, _ := strconv.Atoi(expiredInMinutesStr)
 
 	checkEmail, _ := i.userRepository.FindByEmail(&p.Email)
 
@@ -35,7 +32,7 @@ func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 	})
 
 	paramsGenerateJWTRegister := helpers.ParamsGenerateJWT{
-		ExpiredInMinute: expiredInMinutes,
+		ExpiredInMinute: 480,
 		UserId:          data.ID,
 		SecretKey:       os.Getenv("JWT_SECRET"),
 	}

@@ -12,6 +12,7 @@ type V1 struct {
 
 type iV1 interface {
 	Ping(c echo.Context) error
+	PingAuth(c echo.Context) error
 }
 
 func New(v1 *V1) iV1 {

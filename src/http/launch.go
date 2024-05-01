@@ -24,25 +24,19 @@ func (i *Http) Launch() {
 		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
 	}))
 
-	basePath := "/"
-	if os.Getenv("BASE_PATH") != "" {
-		basePath = os.Getenv("BASE_PATH")
-	}
-
-	baseUrl := e.Group(basePath + "/v1")
+	basePath := "/v1"
+	baseUrl := e.Group(basePath)
 	baseUrl.GET("", func(c echo.Context) error {
 		return c.HTML(http.StatusOK, fmt.Sprintf("API Base Code for %s", os.Getenv("ENVIRONMENT")))
 	})
 
-	baseUrl.Static("/static", "../../temp_assets")
-
 	v1 := v1routes.New(&v1routes.V1Routes{
-		Echo: e.Group(basePath + "/v1"),
+		Echo: e.Group(basePath),
 		DB:   i.DB,
 	})
 
 	v1.MountPing()
 	v1.MountUser()
 
-	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", os.Getenv("HTTP_PORT"))))
+	e.Logger.Fatal(e.Start(":8080"))
 }
