@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
 
-	"github.com/BennoAlif/ps-cats-social/src/routes"
+	"github.com/BennoAlif/ps-cats-social/src/drivers/db"
+	"github.com/BennoAlif/ps-cats-social/src/http"
 	"github.com/joho/godotenv"
 )
 
@@ -16,19 +15,11 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	router := http.NewServeMux()
+	dbConnection := db.CreateConnection()
 
-	routes.LoadAuthRoutes(router)
+	h := http.New(&http.Http{
+		DB: dbConnection,
+	})
 
-	v1 := http.NewServeMux()
-	v1.Handle("/v1/", http.StripPrefix("/v1", router))
-
-	server := http.Server{
-		Addr:    ":8080",
-		Handler: v1,
-	}
-
-	fmt.Println("Server is breathing on port :8080")
-	server.ListenAndServe()
-
+	h.Launch()
 }
