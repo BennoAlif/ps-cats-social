@@ -3,8 +3,6 @@
     ```bash
     migrate create -ext sql -dir db/migrations add_user_table
     
-    ```
-    
     This command will create two new files named `add_user_table.up.sql` and `add_user_table.down.sql` inside the `db/migrations` folder
     
     - `.up.sql` can be filled with database queries to create / delete / change the table
@@ -15,10 +13,6 @@
     ```bash
     migrate -database "postgres://username:password@host:port/dbname?sslmode=disable" -path db/migrations up
     
-    ```
-    
 # Rollback migration
  ```bash
-    migrate -database "postgres://username:password@host:port/dbname?sslmode=disable" -path db/migrations down
-    
-    ```
+    migrate -database "postgres://username:password@host:port/dbname?sslmode=disable" -path db/migrations dow
