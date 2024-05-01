@@ -37,7 +37,7 @@ func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 	paramsGenerateJWTRegister := helpers.ParamsGenerateJWT{
 		ExpiredInMinute: expiredInMinutes,
 		UserId:          data.ID,
-		SecretKey:       os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
+		SecretKey:       os.Getenv("JWT_SECRET"),
 	}
 
 	accessToken, _, errAccessToken := helpers.GenerateJWT(&paramsGenerateJWTRegister)

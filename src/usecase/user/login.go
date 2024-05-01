@@ -41,7 +41,7 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 	paramsGenerateJWTLogin := helpers.ParamsGenerateJWT{
 		ExpiredInMinute: expiredInMinutes,
 		UserId:          user.ID,
-		SecretKey:       os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
+		SecretKey:       os.Getenv("JWT_SECRET"),
 	}
 
 	isValidPassword := helpers.CheckPasswordHash(p.Password, user.Password)
