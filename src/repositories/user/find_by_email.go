@@ -1,6 +1,7 @@
 package userrepository
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/BennoAlif/ps-cats-social/src/entities"
@@ -14,22 +15,17 @@ type User struct {
 }
 
 func (i *sUserRepository) FindByEmail(email *string) (*entities.User, error) {
-	rows, err := i.DB.Query("SELECT * FROM users WHERE email = ?", email)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+	row := i.DB.QueryRow("SELECT id, name, email, password FROM users WHERE email = $1", email)
 
 	var user entities.User
-	for rows.Next() {
-		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password)
-		if err != nil {
-			log.Fatal(err)
+	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Printf("No user found with email: %s", email)
+			return nil, nil // Return nil for both user and error
 		}
-	}
-
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
+		log.Printf("Error scanning user by email: %s", err)
+		return nil, err
 	}
 
 	return &user, nil

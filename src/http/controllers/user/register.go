@@ -28,6 +28,7 @@ func (i *V1User) Register(c echo.Context) (err error) {
 	)
 
 	data, err := uu.CreateUser(&userUsecase.ParamsCreateUser{
+		Name:     u.Name,
 		Email:    u.Email,
 		Password: u.Password,
 	})

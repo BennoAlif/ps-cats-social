@@ -17,9 +17,9 @@ type (
 		ExpiredAt int64  `json:"expired_at"`
 	}
 	ResultLogin struct {
-		Email       string
-		Name        string
-		AccessToken GeneratedToken
+		Email       string `json:"email"`
+		Name        string `json:"name"`
+		AccessToken string `json:"accessToken"`
 	}
 )
 
@@ -56,10 +56,8 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 	}
 
 	return &ResultLogin{
-		Name:  user.Name,
-		Email: p.Email,
-		AccessToken: GeneratedToken{
-			Token: accessToken,
-		},
+		Name:        user.Name,
+		Email:       p.Email,
+		AccessToken: accessToken,
 	}, nil
 }

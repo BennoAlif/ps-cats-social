@@ -9,7 +9,6 @@ import (
 
 func CreateConnection() *sql.DB {
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
-
 	if err != nil {
 		panic(err)
 	}

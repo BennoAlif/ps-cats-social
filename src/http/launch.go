@@ -39,10 +39,10 @@ func (i *Http) Launch() {
 	v1 := v1routes.New(&v1routes.V1Routes{
 		Echo: e.Group(basePath + "/v1"),
 		DB:   i.DB,
-		// Cloudwatch: i.Cloudwatch,
 	})
 
 	v1.MountPing()
+	v1.MountUser()
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", os.Getenv("HTTP_PORT"))))
 }

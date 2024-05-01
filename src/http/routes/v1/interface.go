@@ -11,8 +11,14 @@ type V1Routes struct {
 	DB   *sql.DB
 }
 
+// MoungUser implements iV1Routes.
+func (*V1Routes) MoungUser() {
+	panic("unimplemented")
+}
+
 type iV1Routes interface {
 	MountPing()
+	MountUser()
 }
 
 func New(v1Routes *V1Routes) iV1Routes {

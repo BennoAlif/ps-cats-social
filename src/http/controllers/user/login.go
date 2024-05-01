@@ -10,7 +10,7 @@ import (
 )
 
 func (i *V1User) Login(c echo.Context) (err error) {
-	u := new(createRequest)
+	u := new(loginRequest)
 
 	if err = c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{
@@ -27,7 +27,7 @@ func (i *V1User) Login(c echo.Context) (err error) {
 		userRepository.New(i.DB),
 	)
 
-	data, err := uu.CreateUser(&userUsecase.ParamsCreateUser{
+	data, err := uu.Login(&userUsecase.ParamsLogin{
 		Email:    u.Email,
 		Password: u.Password,
 	})

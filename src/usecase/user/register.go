@@ -20,6 +20,7 @@ type (
 func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 	expiredInMinutesStr := os.Getenv("ACCESS_TOKEN_EXPIRED_IN_MINUTES")
 	expiredInMinutes, _ := strconv.Atoi(expiredInMinutesStr)
+
 	checkEmail, _ := i.userRepository.FindByEmail(&p.Email)
 
 	if checkEmail != nil {
@@ -50,10 +51,8 @@ func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 	}
 
 	return &ResultLogin{
-		Name:  data.Name,
-		Email: p.Email,
-		AccessToken: GeneratedToken{
-			Token: accessToken,
-		},
+		Name:        p.Name,
+		Email:       p.Email,
+		AccessToken: accessToken,
 	}, nil
 }

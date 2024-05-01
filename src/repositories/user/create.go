@@ -15,16 +15,11 @@ type (
 )
 
 func (i *sUserRepository) Create(p *ParamsCreateUser) (*entities.User, error) {
-
-	result, err := i.DB.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", p.Name, p.Email, p.Password)
+	var id int64
+	err := i.DB.QueryRow("INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id", p.Name, p.Email, p.Password).Scan(&id)
 	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Get the ID of the inserted user
-	id, err := result.LastInsertId()
-	if err != nil {
-		log.Fatal(err)
+		log.Printf("Error inserting user: %s", err)
+		return nil, err
 	}
 
 	user := &entities.User{
@@ -34,5 +29,4 @@ func (i *sUserRepository) Create(p *ParamsCreateUser) (*entities.User, error) {
 	}
 
 	return user, nil
-
 }
