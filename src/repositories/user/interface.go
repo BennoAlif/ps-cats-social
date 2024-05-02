@@ -12,7 +12,7 @@ type sUserRepository struct {
 
 type UserRepository interface {
 	Create(*ParamsCreateUser) (*entities.User, error)
-	FindByEmail(*string) (*entities.User, error)
+	FindOne(*entities.ParamsCreateUser) (*entities.User, error)
 }
 
 func New(db *sql.DB) UserRepository {

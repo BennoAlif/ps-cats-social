@@ -14,3 +14,9 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	ExpiredAt time.Time `json:"-"`
 }
+
+type ParamsCreateUser struct {
+	ID    int64
+	Name  string
+	Email string
+}

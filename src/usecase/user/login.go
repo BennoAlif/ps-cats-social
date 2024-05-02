@@ -3,6 +3,7 @@ package userusecase
 import (
 	"os"
 
+	"github.com/BennoAlif/ps-cats-social/src/entities"
 	"github.com/BennoAlif/ps-cats-social/src/helpers"
 )
 
@@ -29,7 +30,12 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 	if emailMx != nil {
 		return nil, emailMx
 	}
-	user, _ := i.userRepository.FindByEmail(&p.Email)
+
+	filters := entities.ParamsCreateUser{
+		Email: p.Email,
+	}
+
+	user, _ := i.userRepository.FindOne(&filters)
 
 	if user == nil {
 		return nil, ErrInvalidUser

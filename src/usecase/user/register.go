@@ -3,6 +3,7 @@ package userusecase
 import (
 	"os"
 
+	"github.com/BennoAlif/ps-cats-social/src/entities"
 	"github.com/BennoAlif/ps-cats-social/src/helpers"
 
 	userrepository "github.com/BennoAlif/ps-cats-social/src/repositories/user"
@@ -18,7 +19,11 @@ type (
 
 func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 
-	checkEmail, _ := i.userRepository.FindByEmail(&p.Email)
+	filters := entities.ParamsCreateUser{
+		Email: p.Email,
+	}
+
+	checkEmail, _ := i.userRepository.FindOne(&filters)
 
 	if checkEmail != nil {
 		return nil, ErrEmailAlreadyUsed
