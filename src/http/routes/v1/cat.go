@@ -14,6 +14,6 @@ func (i *V1Routes) MountCat() {
 
 	g.POST("", catController.Create, middlewares.Authentication())
 	g.GET("", catController.FindMany, middlewares.Authentication())
-	g.PUT("", catController.Update, middlewares.Authentication())
+	g.PUT("/:id", catController.Update, middlewares.Authentication())
 	g.DELETE("", catController.Delete, middlewares.Authentication())
 }

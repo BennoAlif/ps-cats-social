@@ -13,8 +13,7 @@ type sCatRepository struct {
 type CatRepository interface {
 	Create(*entities.ParamsCreateCat) (*entities.CreateCat, error)
 	FindMany(*entities.CatSearchFilter) ([]*entities.Cat, error)
-	// FindOne() (*entities.Cat, error)
-	// Update() (*entities.Cat, error)
+	Update(*int, *entities.ParamsUpdateCat) (*entities.CreateCat, error)
 	// Delete() (*entities.Cat, error)
 }
 

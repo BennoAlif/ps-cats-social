@@ -14,6 +14,7 @@ type sCatUsecase struct {
 type CatUsecase interface {
 	Create(*entities.ParamsCreateCat) (*ResultCreate, error)
 	FindMany(*entities.CatSearchFilter) ([]*entities.Cat, error)
+	Update(*int, *entities.ParamsUpdateCat) (*ResultCreate, error)
 }
 
 func New(catRepository cat.CatRepository, userRepository user.UserRepository) CatUsecase {

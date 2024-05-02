@@ -45,3 +45,12 @@ type ParamsCreateCat struct {
 	ImageUrls   pq.StringArray
 	UserId      int
 }
+
+type ParamsUpdateCat struct {
+	Name        string
+	Race        string
+	Sex         string
+	AgeInMonth  int
+	Description string
+	ImageUrls   pq.StringArray
+}

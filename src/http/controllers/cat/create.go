@@ -57,7 +57,7 @@ func (i *V1Cat) Create(c echo.Context) (err error) {
 	}
 
 	return c.JSON(http.StatusCreated, SuccessResponse{
-		Message: "User logged successfully",
+		Message: "Cat created successfully",
 		Data:    data,
 	})
 }

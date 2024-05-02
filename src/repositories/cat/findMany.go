@@ -70,8 +70,6 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 		params = append(params, filters.Offset)
 	}
 
-	fmt.Println(query)
-
 	rows, err := i.DB.Query(query, params...)
 	if err != nil {
 		return nil, err
