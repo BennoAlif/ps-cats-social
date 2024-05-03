@@ -20,9 +20,6 @@ type (
 func (i *V1Cat) Create(c echo.Context) (err error) {
 	u := new(createRequest)
 
-	uid := new(meValidator)
-	mapstructure.Decode(c.Get("user"), &uid)
-
 	if err = c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{
 			Status:  false,
@@ -30,8 +27,21 @@ func (i *V1Cat) Create(c echo.Context) (err error) {
 		})
 	}
 
+	uid := new(meValidator)
+	mapstructure.Decode(c.Get("user"), &uid)
+
+	if !ValidateRace(u.Race) {
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: "Invalid race",
+		})
+	}
+
 	if err = c.Validate(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: err.Error(),
+		})
 	}
 
 	uu := catusecase.New(
@@ -65,10 +75,28 @@ func (i *V1Cat) Create(c echo.Context) (err error) {
 type (
 	createRequest struct {
 		Name        string   `json:"name" validate:"required,min=1,max=30"`
-		Race        string   `json:"race" validate:"required,oneof=Persian MaineCoon Siamese Ragdoll Bengal Sphynx BritishShorthair Abyssinian ScottishFold Birman"`
+		Race        string   `json:"race" validate:"required"`
 		Sex         string   `json:"sex" validate:"required,oneof=male female"`
 		AgeInMonth  int      `json:"ageInMonth" validate:"required,min=1,max=120082"`
 		Description string   `json:"description" validate:"required,min=1,max=200"`
 		ImageUrls   []string `json:"imageUrls" validate:"required,min=1,dive,url"`
 	}
 )
+
+func ValidateRace(race string) bool {
+	validRaces := map[string]bool{
+		"Persian":           true,
+		"Maine Coon":        true,
+		"Siamese":           true,
+		"Ragdoll":           true,
+		"Bengal":            true,
+		"Sphynx":            true,
+		"British Shorthair": true,
+		"Abyssinian":        true,
+		"Scottish Fold":     true,
+		"Birman":            true,
+	}
+
+	_, ok := validRaces[race]
+	return ok
+}

@@ -17,19 +17,13 @@ type (
 		ExpiredAt int64  `json:"expired_at"`
 	}
 	ResultLogin struct {
-		Email       string `json:"email"`
 		Name        string `json:"name"`
+		Email       string `json:"email"`
 		AccessToken string `json:"accessToken"`
 	}
 )
 
 func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
-
-	emailMx := helpers.ValidateMx(p.Email)
-
-	if emailMx != nil {
-		return nil, emailMx
-	}
 
 	filters := entities.ParamsCreateUser{
 		Email: p.Email,
@@ -38,7 +32,7 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 	user, _ := i.userRepository.FindOne(&filters)
 
 	if user == nil {
-		return nil, ErrInvalidUser
+		return nil, ErrUserNotFound
 	}
 
 	paramsGenerateJWTLogin := helpers.ParamsGenerateJWT{
@@ -49,7 +43,7 @@ func (i *sUserUsecase) Login(p *ParamsLogin) (*ResultLogin, error) {
 
 	isValidPassword := helpers.CheckPasswordHash(p.Password, user.Password)
 	if !isValidPassword {
-		return nil, ErrInvalidUser
+		return nil, ErrInvalidPassword
 	}
 
 	accessToken, _, errAccessToken := helpers.GenerateJWT(&paramsGenerateJWTLogin)

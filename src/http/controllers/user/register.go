@@ -20,7 +20,10 @@ func (i *V1User) Register(c echo.Context) (err error) {
 	}
 
 	if err = c.Validate(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: err.Error(),
+		})
 	}
 
 	uu := userUsecase.New(
@@ -48,8 +51,8 @@ func (i *V1User) Register(c echo.Context) (err error) {
 
 type (
 	createRequest struct {
-		Name     string `json:"name" validate:"required"`
+		Name     string `json:"name" validate:"required,min=5,max=50"`
 		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required"`
+		Password string `json:"password" validate:"required,min=5,max=15"`
 	}
 )

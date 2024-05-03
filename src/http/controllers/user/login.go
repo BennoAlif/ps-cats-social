@@ -20,7 +20,10 @@ func (i *V1User) Login(c echo.Context) (err error) {
 	}
 
 	if err = c.Validate(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: err.Error(),
+		})
 	}
 
 	uu := userUsecase.New(
@@ -33,10 +36,17 @@ func (i *V1User) Login(c echo.Context) (err error) {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, ErrorResponse{
-			Status:  false,
-			Message: err.Error(),
-		})
+		if err.Error() == userUsecase.ErrUserNotFound.Error() {
+			return c.JSON(http.StatusNotFound, ErrorResponse{
+				Status:  false,
+				Message: err.Error(),
+			})
+		} else if err.Error() == userUsecase.ErrInvalidPassword.Error() {
+			return c.JSON(http.StatusBadRequest, ErrorResponse{
+				Status:  false,
+				Message: err.Error(),
+			})
+		}
 	}
 
 	return c.JSON(http.StatusOK, SuccessResponse{
@@ -48,6 +58,6 @@ func (i *V1User) Login(c echo.Context) (err error) {
 type (
 	loginRequest struct {
 		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required"`
+		Password string `json:"password" validate:"required,min=5,max=15"`
 	}
 )

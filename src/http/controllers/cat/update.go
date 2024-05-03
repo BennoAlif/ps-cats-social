@@ -29,6 +29,13 @@ func (i *V1Cat) Update(c echo.Context) (err error) {
 		})
 	}
 
+	if !ValidateRace(u.Race) {
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: "Invalid race",
+		})
+	}
+
 	if err = c.Validate(u); err != nil {
 		return err
 	}
