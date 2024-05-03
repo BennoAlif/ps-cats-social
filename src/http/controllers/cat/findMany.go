@@ -10,6 +10,7 @@ import (
 	userrepository "github.com/BennoAlif/ps-cats-social/src/repositories/user"
 	catusecase "github.com/BennoAlif/ps-cats-social/src/usecase/cat"
 	"github.com/labstack/echo/v4"
+	"github.com/mitchellh/mapstructure"
 )
 
 func (i *V1Cat) FindMany(c echo.Context) (err error) {
@@ -82,6 +83,10 @@ func (i *V1Cat) FindMany(c echo.Context) (err error) {
 		}
 		filters.AgeInMonth = ageInMonth
 	}
+
+	uid := new(meValidator)
+	mapstructure.Decode(c.Get("user"), &uid)
+
 	if ownedStr := c.QueryParam("owned"); ownedStr != "" {
 		owned, err := strconv.ParseBool(ownedStr)
 		if err != nil {
@@ -90,6 +95,7 @@ func (i *V1Cat) FindMany(c echo.Context) (err error) {
 				Message: "Invalid value for 'owned'",
 			})
 		}
+		filters.UserId = uid.ID
 		filters.Owned = owned
 	}
 	if search := c.QueryParam("search"); search != "" {
@@ -109,14 +115,11 @@ func (i *V1Cat) FindMany(c echo.Context) (err error) {
 		})
 	}
 
-	// Return success response with data
 	return c.JSON(http.StatusOK, SuccessResponse{
 		Message: "Cats found successfully",
 		Data:    data,
 	})
 }
-
-// Helper functions for validation
 
 func isValidRace(race string) bool {
 	validRaces := []string{"Persian", "Maine Coon", "Siamese", "Ragdoll", "Bengal", "Sphynx", "British Shorthair", "Abyssinian", "Scottish Fold", "Birman"}

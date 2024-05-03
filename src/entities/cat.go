@@ -33,6 +33,7 @@ type CatSearchFilter struct {
 	HasMatched bool
 	AgeInMonth string
 	Owned      bool
+	UserId     int
 	Search     string
 }
 

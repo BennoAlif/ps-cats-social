@@ -34,7 +34,7 @@ func (i *V1Cat) Delete(c echo.Context) (err error) {
 		})
 	}
 
-	return c.JSON(http.StatusCreated, SuccessResponse{
+	return c.JSON(http.StatusOK, SuccessResponse{
 		Message: "Cat deleted successfully",
 		Data:    nil,
 	})

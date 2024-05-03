@@ -37,7 +37,10 @@ func (i *V1Cat) Update(c echo.Context) (err error) {
 	}
 
 	if err = c.Validate(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, ErrorResponse{
+			Status:  false,
+			Message: err.Error(),
+		})
 	}
 
 	uu := catusecase.New(
@@ -61,7 +64,7 @@ func (i *V1Cat) Update(c echo.Context) (err error) {
 		})
 	}
 
-	return c.JSON(http.StatusCreated, SuccessResponse{
+	return c.JSON(http.StatusOK, SuccessResponse{
 		Message: "Cat updated successfully",
 		Data:    data,
 	})

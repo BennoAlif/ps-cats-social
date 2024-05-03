@@ -44,8 +44,8 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 			params = append(params, value)
 		}
 		if filters.Owned {
-			conditions = append(conditions, "owned = $"+strconv.Itoa(len(params)+1))
-			params = append(params, filters.Owned)
+			conditions = append(conditions, "user_id = $"+strconv.Itoa(len(params)+1))
+			params = append(params, filters.UserId)
 		}
 
 		if len(conditions) > 0 {
