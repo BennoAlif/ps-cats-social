@@ -1,7 +1,6 @@
 package catrepository
 
 import (
-	"log"
 	"time"
 
 	"github.com/BennoAlif/ps-cats-social/src/entities"
@@ -22,7 +21,6 @@ func (i *sCatRepository) Update(catId *int, p *entities.ParamsUpdateCat) (*entit
 	).Scan(&id, &createdAt)
 
 	if err != nil {
-		log.Printf("Error updating cat: %s", err)
 		return nil, err
 	}
 

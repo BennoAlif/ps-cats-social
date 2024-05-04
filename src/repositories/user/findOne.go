@@ -2,7 +2,6 @@ package userrepository
 
 import (
 	"database/sql"
-	"log"
 	"strconv"
 	"strings"
 
@@ -38,10 +37,8 @@ func (i *sUserRepository) FindOne(filters *entities.ParamsCreateUser) (*entities
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			log.Printf("No user found: %s", err)
 			return nil, nil // Return nil for both user and error
 		}
-		log.Printf("Error scanning user: %s", err)
 		return nil, err
 	}
 

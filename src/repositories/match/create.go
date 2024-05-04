@@ -1,8 +1,6 @@
 package matchrepository
 
 import (
-	"log"
-
 	"github.com/BennoAlif/ps-cats-social/src/entities"
 )
 
@@ -14,7 +12,6 @@ func (i *sMatchRepository) Create(p *entities.CreateMatch) error {
 	)
 
 	if err != nil {
-		log.Printf("Error creating match: %s", err)
 		return err
 	}
 
