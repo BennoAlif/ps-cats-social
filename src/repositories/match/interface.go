@@ -12,10 +12,11 @@ type sMatchRepository struct {
 
 type MatchRepository interface {
 	Create(*entities.CreateMatch) error
-	// FindMany()
-	// Approve()
-	// Reject()
-	// Delete()
+	FindMany(*int) ([]*entities.Match, error)
+	FindOne(*entities.SearchMatch) (*entities.FindOneMatch, error)
+	Approve(*int) error
+	// Reject(*int) error
+	Delete(*int) error
 }
 
 func New(db *sql.DB) MatchRepository {

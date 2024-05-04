@@ -33,13 +33,13 @@ func (i *sMatchUsecase) Create(p *entities.CreateMatch, uId *int) error {
 		return ErrSameCatGender
 	}
 
-	if matchCatId[0].IsApproved.Valid && matchCatId[0].IsApproved.Bool {
-		return ErrAlreadyMatch
-	}
+	// if matchCatId[0].IsApproved.Valid && matchCatId[0].IsApproved.Bool {
+	// 	return ErrAlreadyMatch
+	// }
 
-	if userCatId[0].IsApproved.Valid && userCatId[0].IsApproved.Bool {
-		return ErrAlreadyMatch
-	}
+	// if userCatId[0].IsApproved.Valid && userCatId[0].IsApproved.Bool {
+	// 	return ErrAlreadyMatch
+	// }
 
 	// if userCatId[0].UserId == matchCatId[0].UserId {
 	// 	return ErrSameOwner

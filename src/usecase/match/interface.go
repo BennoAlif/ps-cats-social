@@ -15,6 +15,8 @@ type sMatchUsecase struct {
 
 type MatchUsecase interface {
 	Create(*entities.CreateMatch, *int) error
+	FindMany(*int) ([]*entities.Match, error)
+	Delete(*int, *int) error
 }
 
 func New(matchRepository match.MatchRepository, catRepository cat.CatRepository, userRepository user.UserRepository) MatchUsecase {

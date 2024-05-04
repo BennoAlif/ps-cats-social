@@ -8,20 +8,17 @@ import (
 )
 
 type Cat struct {
-	ID            int64          `json:"id"`
-	Name          string         `json:"name"`
-	Race          string         `json:"race"`
-	Sex           string         `json:"sex"`
-	AgeInMonth    int            `json:"ageInMonth"`
-	ImageUrls     pq.StringArray `json:"imageUrls"`
-	Description   string         `json:"description"`
-	HasMatched    bool           `json:"hasMatched"`
-	CreatedAt     time.Time      `json:"createdAt"`
-	UpdatedAt     time.Time      `json:"-"`
-	UserId        sql.NullInt64  `json:"-"`
-	MatchingCatId sql.NullInt64  `json:"-"`
-	IsApproved    sql.NullBool   `json:"-"`
-	Message       sql.NullString `json:"-"`
+	ID          int64          `json:"id"`
+	Name        string         `json:"name"`
+	Race        string         `json:"race"`
+	Sex         string         `json:"sex"`
+	AgeInMonth  int            `json:"ageInMonth"`
+	ImageUrls   pq.StringArray `json:"imageUrls"`
+	Description string         `json:"description"`
+	HasMatched  bool           `json:"hasMatched"`
+	CreatedAt   time.Time      `json:"createdAt"`
+	UpdatedAt   time.Time      `json:"-"`
+	UserId      sql.NullInt64  `json:"-"`
 }
 
 type CreateCat struct {

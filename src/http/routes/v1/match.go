@@ -13,7 +13,6 @@ func (i *V1Routes) MountMatch() {
 	})
 
 	g.POST("", matchController.Create, middlewares.Authentication())
-	// g.GET("", matchController.FindMany, middlewares.Authentication())
-	// g.PUT("/:id", matchController.Update, middlewares.Authentication())
-	// g.DELETE("/:id", matchController.Delete, middlewares.Authentication())
+	g.GET("", matchController.FindMany, middlewares.Authentication())
+	g.DELETE("/:id", matchController.Delete, middlewares.Authentication())
 }
