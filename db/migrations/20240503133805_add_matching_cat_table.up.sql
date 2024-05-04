@@ -1,0 +1,10 @@
+CREATE TABLE cat_matches (
+    id SERIAL PRIMARY KEY,
+    user_cat_id INT NOT NULL,
+    matching_cat_id INT NOT NULL,
+    is_approved BOOLEAN DEFAULT FALSE,
+    message VARCHAR(200),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_cat_id) REFERENCES cats(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (matching_cat_id) REFERENCES cats(id) ON DELETE CASCADE ON UPDATE CASCADE
+);

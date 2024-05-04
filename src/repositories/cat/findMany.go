@@ -10,7 +10,7 @@ import (
 )
 
 func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entities.Cat, error) {
-	query := "SELECT id, name, race, sex, age_in_month, description, img_urls, created_at FROM cats WHERE 1=1 "
+	query := "SELECT id, name, race, sex, age_in_month, description, img_urls, created_at, user_id, matching_cat_id, is_approved, message FROM cats WHERE 1=1 "
 	params := []interface{}{}
 
 	n := (&entities.CatSearchFilter{})
@@ -35,8 +35,8 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 			params = append(params, filters.Sex)
 		}
 		if filters.HasMatched {
-			conditions = append(conditions, "has_matched = $"+strconv.Itoa(len(params)+1))
-			params = append(params, filters.HasMatched)
+			conditions = append(conditions, "matching_cat_id IS NOT NULL AND is_approved = true"+strconv.Itoa(len(params)+1))
+			// params = append(params, filters.HasMatched)
 		}
 		if filters.AgeInMonth != "" {
 			operator, value := parseAgeInMonth(filters.AgeInMonth)
@@ -79,7 +79,7 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 	cats := make([]*entities.Cat, 0)
 	for rows.Next() {
 		c := new(entities.Cat)
-		err := rows.Scan(&c.ID, &c.Name, &c.Race, &c.Sex, &c.AgeInMonth, &c.Description, &c.ImageUrls, &c.CreatedAt)
+		err := rows.Scan(&c.ID, &c.Name, &c.Race, &c.Sex, &c.AgeInMonth, &c.Description, &c.ImageUrls, &c.CreatedAt, &c.UserId, &c.MatchingCatId, &c.IsApproved, &c.Message)
 		if err != nil {
 			return nil, err
 		}
