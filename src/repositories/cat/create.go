@@ -1,6 +1,7 @@
 package catrepository
 
 import (
+	"log"
 	"time"
 
 	"github.com/BennoAlif/ps-cats-social/src/entities"
@@ -20,6 +21,7 @@ func (i *sCatRepository) Create(p *entities.ParamsCreateCat) (*entities.CreateCa
 	).Scan(&id, &createdAt)
 
 	if err != nil {
+		log.Printf("Error creating cat: %s", err)
 		return nil, err
 	}
 

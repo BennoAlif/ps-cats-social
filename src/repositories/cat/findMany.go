@@ -2,6 +2,7 @@ package catrepository
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 	"strconv"
 	"strings"
@@ -10,7 +11,6 @@ import (
 )
 
 func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entities.Cat, error) {
-	// TODO: JOIN WITH CAT_MATCHES
 	query := "SELECT id, name, race, sex, age_in_month, description, img_urls, created_at, user_id FROM cats WHERE 1=1 "
 	params := []interface{}{}
 
@@ -35,11 +35,11 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 			conditions = append(conditions, "sex = $"+strconv.Itoa(len(params)+1))
 			params = append(params, filters.Sex)
 		}
-		if filters.HasMatched {
-			// TODO: FIX THIS LOGIC
-			// conditions = append(conditions, "matching_cat_id IS NOT NULL AND is_approved = true"+strconv.Itoa(len(params)+1))
-			// params = append(params, filters.HasMatched)
-		}
+		// if filters.HasMatched {
+		// TODO: FIX THIS LOGIC
+		// conditions = append(conditions, "matching_cat_id IS NOT NULL AND is_approved = true"+strconv.Itoa(len(params)+1))
+		// params = append(params, filters.HasMatched)
+		// }
 		if filters.AgeInMonth != "" {
 			operator, value := parseAgeInMonth(filters.AgeInMonth)
 			conditions = append(conditions, fmt.Sprintf("age_in_month %s $%d", operator, len(params)+1))
@@ -74,6 +74,7 @@ func (i *sCatRepository) FindMany(filters *entities.CatSearchFilter) ([]*entitie
 
 	rows, err := i.DB.Query(query, params...)
 	if err != nil {
+		log.Printf("Error finding cat: %s", err)
 		return nil, err
 	}
 	defer rows.Close()

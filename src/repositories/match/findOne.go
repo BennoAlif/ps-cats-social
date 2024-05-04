@@ -2,6 +2,7 @@ package matchrepository
 
 import (
 	"database/sql"
+	"log"
 	"strconv"
 	"strings"
 
@@ -36,6 +37,7 @@ func (i *sMatchRepository) FindOne(filters *entities.SearchMatch) (*entities.Fin
 	)
 
 	if err != nil {
+		log.Printf("Error finding match: %s", err)
 		if err == sql.ErrNoRows {
 			return nil, nil // Return nil for both user and error
 		}

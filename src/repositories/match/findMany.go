@@ -1,6 +1,8 @@
 package matchrepository
 
 import (
+	"log"
+
 	"github.com/BennoAlif/ps-cats-social/src/entities"
 )
 
@@ -102,6 +104,7 @@ ORDER BY id DESC
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Printf("Error finding match: %s", err)
 		return nil, err
 	}
 
