@@ -16,6 +16,8 @@ type sMatchUsecase struct {
 type MatchUsecase interface {
 	Create(*entities.CreateMatch, *int) error
 	FindMany(*int) ([]*entities.Match, error)
+	Approve(*int) error
+	Reject(*int) error
 	Delete(*int, *int) error
 }
 

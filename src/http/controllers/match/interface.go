@@ -13,6 +13,8 @@ type V1Match struct {
 type iV1Match interface {
 	Create(c echo.Context) error
 	FindMany(c echo.Context) error
+	Approve(c echo.Context) error
+	Reject(c echo.Context) error
 	Delete(c echo.Context) error
 }
 

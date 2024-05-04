@@ -15,7 +15,7 @@ type MatchRepository interface {
 	FindMany(*int) ([]*entities.Match, error)
 	FindOne(*entities.SearchMatch) (*entities.FindOneMatch, error)
 	Approve(*int) error
-	// Reject(*int) error
+	Reject(*int) error
 	Delete(*int) error
 }
 

@@ -14,5 +14,7 @@ func (i *V1Routes) MountMatch() {
 
 	g.POST("", matchController.Create, middlewares.Authentication())
 	g.GET("", matchController.FindMany, middlewares.Authentication())
+	g.POST("/approve", matchController.Approve, middlewares.Authentication())
+	g.POST("/reject", matchController.Reject, middlewares.Authentication())
 	g.DELETE("/:id", matchController.Delete, middlewares.Authentication())
 }
