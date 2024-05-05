@@ -25,9 +25,9 @@ func (i *sMatchUsecase) Create(p *entities.CreateMatch, uId *int) error {
 		return catusecase.ErrCatNotFound
 	}
 
-	if userCatId[0].UserId.Valid && int(userCatId[0].UserId.Int64) != *uId {
-		return ErrCatNotBelongToUser
-	}
+	// if userCatId[0].UserId.Valid && int(userCatId[0].UserId.Int64) != *uId {
+	// 	return ErrCatNotBelongToUser
+	// }
 
 	if matchCatId[0].Sex == userCatId[0].Sex {
 		return ErrSameCatGender
