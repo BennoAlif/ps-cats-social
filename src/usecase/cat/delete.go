@@ -7,9 +7,9 @@ func (i *sCatUsecase) Delete(catId *int) error {
 		ID: *catId,
 	}
 
-	cat, _ := i.catRepository.FindMany(&filters)
+	cat, _ := i.catRepository.IsExists(&filters)
 
-	if len(cat) == 0 {
+	if !cat {
 		return ErrCatNotFound
 	}
 

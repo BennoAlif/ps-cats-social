@@ -13,6 +13,7 @@ type sUserRepository struct {
 type UserRepository interface {
 	Create(*ParamsCreateUser) (*entities.User, error)
 	FindOne(*entities.ParamsCreateUser) (*entities.User, error)
+	IsExists(*entities.ParamsCreateUser) (bool, error)
 }
 
 func New(db *sql.DB) UserRepository {

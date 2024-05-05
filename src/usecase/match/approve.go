@@ -7,9 +7,9 @@ func (i *sMatchUsecase) Approve(id *int) error {
 		MatchCatId: *id,
 	}
 
-	match, _ := i.matchRepository.FindOne(&filters)
+	match, _ := i.matchRepository.IsExists(&filters)
 
-	if match == nil {
+	if !match {
 		return ErrNotFound
 	}
 

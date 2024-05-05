@@ -23,9 +23,9 @@ func (i *sUserUsecase) CreateUser(p *ParamsCreateUser) (*ResultLogin, error) {
 		Email: p.Email,
 	}
 
-	checkEmail, _ := i.userRepository.FindOne(&filters)
+	checkEmail, _ := i.userRepository.IsExists(&filters)
 
-	if checkEmail != nil {
+	if checkEmail {
 		return nil, ErrEmailAlreadyUsed
 	}
 

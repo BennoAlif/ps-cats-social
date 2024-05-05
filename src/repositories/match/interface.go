@@ -14,6 +14,7 @@ type MatchRepository interface {
 	Create(*entities.CreateMatch) error
 	FindMany(*int) ([]*entities.Match, error)
 	FindOne(*entities.SearchMatch) (*entities.FindOneMatch, error)
+	IsExists(*entities.SearchMatch) (bool, error)
 	Approve(*int) error
 	Reject(*int) error
 	Delete(*int) error

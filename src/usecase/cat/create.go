@@ -19,9 +19,9 @@ func (i *sCatUsecase) Create(p *entities.ParamsCreateCat) (*ResultCreate, error)
 		ID: int64(p.UserId),
 	}
 
-	user, _ := i.userRepository.FindOne(&filters)
+	user, _ := i.userRepository.IsExists(&filters)
 
-	if user == nil {
+	if !user {
 		return nil, userusecase.ErrInvalidUser
 	}
 
@@ -32,7 +32,7 @@ func (i *sCatUsecase) Create(p *entities.ParamsCreateCat) (*ResultCreate, error)
 		AgeInMonth:  p.AgeInMonth,
 		Description: p.Description,
 		ImageUrls:   p.ImageUrls,
-		UserId:      int(user.ID),
+		UserId:      p.UserId,
 	})
 
 	if err != nil {
