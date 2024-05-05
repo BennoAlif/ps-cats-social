@@ -2,6 +2,8 @@
 
 Cats Social is an app that allows cat owners to match their cats with each other.
 
+![It's a cat](https://media.giphy.com/media/jJjb9AUHOiP3nJJMdy/giphy.gif)
+
 ## 📜Table of Contents
 
 - [Cats Socials - Tree Planting Backend](#cats-social)
@@ -11,6 +13,7 @@ Cats Social is an app that allows cat owners to match their cats with each other
   - [🌟Features](#features)
   - [🚀Usage](#usage)
   - [⚙️Configuration](#️configuration)
+  - [💾Database Migration](#database-migration)
 
 ## 🔍Requirements
 
@@ -102,7 +105,7 @@ The application uses environment variables for configuration. You can configure 
 
 - Refer to the [Usage](#usage) section for a detailed explanation of each environment variable.
 
-## Database Migration
+## 💾Database Migration
 
 Database migration must use golang-migrate as a tool to manage database migration
 
