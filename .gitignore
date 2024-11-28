@@ -25,5 +25,7 @@ go.work
 *.pem
 w1key
 
+/db/password.txt
+
 main_benno_alif
 main
