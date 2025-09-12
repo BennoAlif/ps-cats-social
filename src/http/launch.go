@@ -41,5 +41,12 @@ func (i *Http) Launch() {
 	v1.MountCat()
 	v1.MountMatch()
 
+	// health check
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"status": "UP",
+		})
+	})
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
